@@ -17,7 +17,7 @@ export class Trie {
     }
   }
 
-  insert(path) {
+  insert(path) { // path是一个包含一个或数个node的路径，insert用以创建一条路径
     let currNode = this.root;
     for (const nodeValue of path) {
       const node = currNode.children.get(nodeValue) || new TrieNode(nodeValue);
@@ -29,16 +29,18 @@ export class Trie {
 
   search(word) {
     let currNode = this.root;
-    for (const str of word) {
+    for (const str of word) { // 逐层查看父节点下面有没有当前值，如果有就更新currNode为子节点，否则word不在树中
       currNode = currNode.children.get(str);
       if (!currNode) {
         return false;
       }
     }
-    if (this.isWordNode) {
+    // 如果有word在词库中，找一条downward path（也就是自动联想的字串）然后返回
+    if (this.isWordNode) { // 如果是word的node，只需返回第一个word
       const next = currNode.children.keys().next().value;
-      return next ? ` ${next}` : next;
+      return next;
     }
+    // 如果是charNode便要找到leaf （ended）以返回完整联想字串
     return this.getDownwardPath(currNode, '');
   }
 
@@ -49,10 +51,7 @@ export class Trie {
     for (const val of root.children.keys()) {
       if (root.children.has(val)) {
         const next = root.children.get(val);
-        return this.getDownwardPath(
-          next,
-          this.isWordNode ? `${currStr} ${val}` : currStr + val
-        );
+        return this.getDownwardPath(next, currStr + val);
       }
     }
   }

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './SearchPage.css';
 import useAutoFill from '../helpers/useAutoFill';
 import List from './List';
@@ -7,13 +7,11 @@ const TAB_KEY_CODE = 9;
 
 const SearchPage = () => {
   const [input, setInput] = useState('');
-  const [dictionary, setDictionary] = useState(new Set());
-
-  const inputRef = useRef({});
+  const [dictionary, setDictionary] = useState(new Set()); // 使用set来确保array中items的独一性
 
   const autoFillWord = useAutoFill({
     input,
-    dictionary: [...dictionary],
+    dictionary: [...dictionary].reverse(), // Reverse 是为了优先联想用户最近输入的词组
   });
 
   const onSubmit = e => {
@@ -25,11 +23,11 @@ const SearchPage = () => {
   const handleKeydDown = e => {
     if (e.keyCode === TAB_KEY_CODE && autoFillWord) {
       e.preventDefault();
-      setInput(x => x + autoFillWord);
+      setInput(x => x + `${autoFillWord} `);
     }
   };
 
-  const measureTextWidth = () => {
+  const measureTextWidth = () => { // 用以计算input中文字的width，以得出自动补全文字的margin-left数值
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     context.font = getComputedStyle(document.body).font;
@@ -42,7 +40,6 @@ const SearchPage = () => {
       <form onSubmit={onSubmit}>
         <div className="input-container">
           <input
-            ref={inputRef}
             className="input"
             value={input}
             onChange={e => setInput(e.target.value)}
@@ -58,7 +55,7 @@ const SearchPage = () => {
               style={{
                 marginLeft: `${
                   measureTextWidth() +
-                  (autoFillWord[0] === ' ' ? 5 : 0)
+                  (autoFillWord[0] === ' ' ? 4 : 0)
                   /* 5 is for the length of space as needed in next word prediction */
                 }px`,
               }}

@@ -17,3 +17,9 @@
 .list-item.alter, .list-header {
     background-color: #f2f2f2;
 }
+
+@media only screen and (max-width: 1260px) {
+    .list {
+        width: 90vw;
+    }
+}
