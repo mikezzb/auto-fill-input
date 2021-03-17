@@ -10,7 +10,7 @@ const useAutoFill = (input, dictionary, isSentence) => {
       setTrie(new Trie(dictionary, isSentence));
     }
   }, [JSON.stringify(dictionary)]);
-  // As dictionary is a set object, the === comparison will always return false
+  // As dictionary is an array object, the === operator in useEffect checking will always return false
 
   if(dictionary.length && input.length) {
     return trie.search(input);

@@ -1,0 +1,16 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    background-color: #FFFFFF;
+    border-radius: 4px;
+}
+
+.list-item, .list-header {
+    display: inline-flex;
+    padding: 10px 0 10px 20px;
+}
+
+.list-item.alter, .list-header {
+    background-color: #f2f2f2;
+}

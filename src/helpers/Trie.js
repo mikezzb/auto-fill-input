@@ -35,10 +35,7 @@ export class Trie {
         return false;
       }
     }
-    return this.getDownwardPath(
-      currNode,
-      this.isSentence ? word.join(' ') : word
-    );
+    return this.getDownwardPath(currNode, '');
   }
 
   getDownwardPath(root, currStr) {
