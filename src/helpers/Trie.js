@@ -35,7 +35,10 @@ export class Trie {
         return false;
       }
     }
-    return this.getDownwardPath(currNode, word);
+    return this.getDownwardPath(
+      currNode,
+      this.isSentence ? word.join(' ') : word
+    );
   }
 
   getDownwardPath(root, currStr) {
@@ -44,9 +47,11 @@ export class Trie {
     }
     for (const val of root.children.keys()) {
       if (root.children.has(val)) {
-        console.log(val)
         const next = root.children.get(val);
-        return this.getDownwardPath(next, currStr + val);
+        return this.getDownwardPath(
+          next,
+          this.isSentence ? `${currStr} ${val}` : currStr + val
+        );
       }
     }
   }
