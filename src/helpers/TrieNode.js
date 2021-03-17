@@ -3,5 +3,5 @@ export default class TrieNode {
     this.val = val;
     this.children = new Map();
     this.ended = false;
-  };
-};
+  }
+}

@@ -1,25 +1,25 @@
 import TrieNode from './TrieNode';
 
 export class Trie {
-  constructor(dictionary, isSentence) {
-    this.isSentence = isSentence;
+  constructor(dictionary, isWordNode) {
+    this.isWordNode = isWordNode;
     this.root = new TrieNode('');
-    if(dictionary.length) {
+    if (dictionary.length) {
       dictionary.forEach(str => {
         const words = str.split(' ');
-        if(isSentence){
-          this.insert(words); // a node is a word, a path consists words nodes
+        if (isWordNode) {
+          this.insert(words); // node is a word, a path consists one or more words nodes
         }
-        else{
-          words.forEach(word => this.insert(word)); // a node is a char, a path consits char nodes.
+        else {
+          words.forEach(word => this.insert(word)); // node is a char, a path consits one or more char nodes.
         }
-      })
+      });
     }
   }
 
   insert(path) {
     let currNode = this.root;
-    for(const nodeValue of path){
+    for (const nodeValue of path) {
       const node = currNode.children.get(nodeValue) || new TrieNode(nodeValue);
       currNode.children.set(nodeValue, node);
       currNode = node;
@@ -29,17 +29,21 @@ export class Trie {
 
   search(word) {
     let currNode = this.root;
-    for(const str of word){
+    for (const str of word) {
       currNode = currNode.children.get(str);
       if (!currNode) {
         return false;
       }
     }
+    if (this.isWordNode) {
+      const next = currNode.children.keys().next().value;
+      return next ? ` ${next}` : next;
+    }
     return this.getDownwardPath(currNode, '');
   }
 
   getDownwardPath(root, currStr) {
-    if(root.ended){
+    if (root.ended) {
       return currStr;
     }
     for (const val of root.children.keys()) {
@@ -47,12 +51,11 @@ export class Trie {
         const next = root.children.get(val);
         return this.getDownwardPath(
           next,
-          this.isSentence ? `${currStr} ${val}` : currStr + val
+          this.isWordNode ? `${currStr} ${val}` : currStr + val
         );
       }
     }
   }
-
 }
 
 export default Trie;
