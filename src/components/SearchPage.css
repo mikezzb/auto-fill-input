@@ -50,9 +50,8 @@ input:focus {
     color: #FFFFFF;
     font-size: 16px;
     font-weight: bold;
-    width: 80px;
     border-radius: 4px;
-    padding: 6px 0px;
+    padding: 8px 20px;
     margin: 30px 0;
     cursor: pointer;
 }

@@ -1,0 +1,70 @@
+{
+  "env": {
+      "browser": true,
+      "es2021": true
+  },
+  "extends": [
+      "plugin:react/recommended",
+      "airbnb-typescript"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+  },
+  "plugins": [
+      "react",
+      "@typescript-eslint",
+      "only-warn"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [0],
+    "indent":"off",
+    "@typescript-eslint/indent": ["error", 2, { "SwitchCase": 1 }],
+    "react/jsx-indent": ["error", 2],
+    "react/jsx-indent-props": ["error", 2],
+    "arrow-parens": ["error", "as-needed"],
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": 0,
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "implicit-arrow-linebreak": "off",
+    "react/button-has-type": "off",
+    "react/jsx-one-expression-per-line": ["error", { "allow": "single-child" }],
+    "operator-linebreak": ["error", "after"],
+    "react/jsx-wrap-multilines": ["error", { "logical": "ignore", "arrow": "ignore" }],
+    "no-nested-ternary": "off",
+    "camelcase": "off",
+    "radix": "off",
+    "comma-dangle": "off",
+    "@typescript-eslint/comma-dangle": ["error"],
+    "object-curly-spacing": ["error", "always"],
+    "linebreak-style": 0,
+    "react/destructuring-assignment": "off",
+    "function-paren-newline": "off",
+    "quote-props": ["error", "as-needed"],
+    "jsx-a11y/alt-text": "off",
+    "jsx-a11y/label-has-associated-control": ["error", { "assert": "either" }],
+    "jsx-a11y/media-has-caption": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-fragments": "off",
+    "no-confusing-arrow": "off",
+    "brace-style": "off",
+    "@typescript-eslint/brace-style": ["error", "stroustrup"],
+    "jsx-a11y/anchor-has-content": "off",
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+    "no-underscore-dangle": 0,
+    "no-alert": 0,
+    "max-len": 0,
+    "no-mixed-operators": 0,
+    "prefer-rest-params": 0,
+    "no-console": 0,
+    "import/no-named-as-default": 0,
+    "no-restricted-syntax": 0
+  }
+}

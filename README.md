@@ -1,13 +1,9 @@
-# Getting Started with Create React App
+# Auto Fill Input
+> Given a dictionary, auto complete for words / sentences within dictionary
+## Functions
+* Auto complete for words
+* Auto complete for sentences
+## Implementations
+* Trie (prefix tree) for searching within dictionary
+* React hooks
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## 启动说明
-
-### `yarn install` / `npm install`
-安装依赖
-
-### `yarn start` / `npm start`
-启动app
-
-然后请打开 [http://localhost:3000](http://localhost:3000) 进行测试.

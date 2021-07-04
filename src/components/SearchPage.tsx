@@ -2,36 +2,41 @@ import React, { useState } from 'react';
 import './SearchPage.css';
 import useAutoFill from '../helpers/useAutoFill';
 import List from './List';
+import { default as defaultDictionary } from '../dictionary';
 
 const TAB_KEY_CODE = 9;
 
 const SearchPage = () => {
   const [input, setInput] = useState('');
-  const [dictionary, setDictionary] = useState(new Set()); // 使用set来确保array中items的独一性
+  const [dictionary, setDictionary] = useState<Set<string>>(new Set(defaultDictionary)); // use set to ensure entries are unique
 
   const autoFillWord = useAutoFill({
     input,
-    dictionary: [...dictionary].reverse(), // Reverse 是为了优先联想用户最近输入的词组
+    dictionary: [...dictionary].reverse(), // Reverse to return recent input first
   });
 
-  const onSubmit = e => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setDictionary(new Set(dictionary).add(input.trim())); // remove possible trailing space at end
     setInput('');
   };
 
-  const handleKeydDown = e => {
+  const handleKeydDown = (e: React.KeyboardEvent) => {
     if (e.keyCode === TAB_KEY_CODE && autoFillWord) {
       e.preventDefault();
-      setInput(x => x + `${autoFillWord} `);
+      setInput(x => `${x}${autoFillWord} `);
     }
   };
 
-  const measureTextWidth = () => { // 用以计算input中文字的width，以得出自动补全文字的margin-left数值
+  // calculate input font width, to get auto fill margin-left
+  const measureTextWidth = () => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
-    context.font = getComputedStyle(document.body).font;
-    return context.measureText(input).width;
+    if (context) {
+      context.font = getComputedStyle(document.body).font;
+      return context.measureText(input).width;
+    }
+    return 0;
   };
 
   return (
@@ -45,7 +50,7 @@ const SearchPage = () => {
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeydDown}
             type="text"
-            placeholder="输入文本..."
+            placeholder="Type something here..."
             required
           />
           {
@@ -55,7 +60,7 @@ const SearchPage = () => {
               style={{
                 marginLeft: `${
                   measureTextWidth() +
-                  (autoFillWord[0] === ' ' ? 4 : 0)
+                  (autoFillWord && autoFillWord[0] === ' ' ? 4 : 0)
                   /* 5 is for the length of space as needed in next word prediction */
                 }px`,
               }}
@@ -64,7 +69,7 @@ const SearchPage = () => {
             </span>
           }
         </div>
-        <input className="submit-button" type="submit" value="提交" />
+        <input className="submit-button" type="submit" value="Submit" />
       </form>
       <List items={[...dictionary].reverse()} />
     </div>

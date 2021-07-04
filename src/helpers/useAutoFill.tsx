@@ -1,10 +1,15 @@
 import { useEffect, useRef } from 'react';
 import Trie from './Trie';
 
+type IUseAutoFillProps = {
+  input: string,
+  dictionary: string[],
+};
+
 const useAutoFill = ({
   input,
   dictionary,
-}) => {
+}: IUseAutoFillProps) => {
   const { current } = useRef({
     wordTrie: new Trie([], true),
     charTrie: new Trie([], false),
@@ -24,8 +29,8 @@ const useAutoFill = ({
     const lastWord = words[words.length - 1];
     const wordSearchResult = words.length && words[0] && current.wordTrie.search(words);
     return wordSearchResult ?
-      `${input[input.length - 1] === ' ' ? '' : ' '}${wordSearchResult}` : //如果在空格前联想，需要加上词之间的空格
-      (!lastCharIsSpace && lastWord && current.charTrie.search(lastWord)); // charTrie 只需搜索最后一个词 (当前词)
+      `${input[input.length - 1] === ' ' ? '' : ' '}${wordSearchResult}` : // add space if predict before space
+      (!lastCharIsSpace && lastWord && current.charTrie.search(lastWord)); // charTrie only need to search for last (current) one
   }
 
   return '';

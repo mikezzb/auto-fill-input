@@ -1,7 +1,12 @@
+import { ITrie, ITrieNode } from '../interfaces';
 import TrieNode from './TrieNode';
 
-export class Trie {
-  constructor(dictionary, isWordNode) {
+export class Trie implements ITrie {
+  isWordNode: boolean;
+
+  root: ITrieNode;
+
+  constructor(dictionary: string[], isWordNode: boolean) {
     this.isWordNode = isWordNode;
     this.root = new TrieNode('');
     if (dictionary.length) {
@@ -17,7 +22,8 @@ export class Trie {
     }
   }
 
-  insert(path) { // path是一个包含一个或数个node的路径，insert用以创建一条路径
+  /* path contains one or more nodes, insert is to create a new path */
+  insert(path: string[] | string) {
     let currNode = this.root;
     for (const nodeValue of path) {
       const node = currNode.children.get(nodeValue) || new TrieNode(nodeValue);
@@ -27,31 +33,32 @@ export class Trie {
     currNode.ended = true;
   }
 
-  search(word) {
-    let currNode = this.root;
-    for (const str of word) { // 逐层查看父节点下面有没有当前值，如果有就更新currNode为子节点，否则word不在树中
+  search(word: string[] | string): string {
+    let currNode: ITrieNode | undefined = this.root;
+    /* Check if children node has current value, if has, update the child to be currNode, else DNE */
+    for (const str of word) {
       currNode = currNode.children.get(str);
       if (!currNode) {
-        return false;
+        return '';
       }
     }
-    // 如果有word在词库中，找一条downward path（也就是自动联想的字串）然后返回
-    if (this.isWordNode) { // 如果是word的node，只需返回第一个word
+    /* If has the word in dictionary, find downward path and return */
+    if (this.isWordNode) {
       const next = currNode.children.keys().next().value;
       return next;
     }
-    // 如果是charNode便要找到leaf （ended）以返回完整联想字串
-    return this.getDownwardPath(currNode, '');
+    /* If the node is char, then find till leaf to return complete string */
+    return this.getDownwardPath(currNode, '') || '';
   }
 
-  getDownwardPath(root, currStr) {
-    if (root.ended) {
+  getDownwardPath(root: ITrieNode | null, currStr: string): string | undefined {
+    if (!root || root.ended) {
       return currStr;
     }
     for (const val of root.children.keys()) {
       if (root.children.has(val)) {
         const next = root.children.get(val);
-        return this.getDownwardPath(next, currStr + val);
+        return this.getDownwardPath(next || null, currStr + val);
       }
     }
   }
