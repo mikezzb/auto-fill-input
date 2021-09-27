@@ -1,6 +1,4 @@
-import { ITrieNode } from '../interfaces';
-
-export default class TrieNode implements ITrieNode {
+export default class TrieNode {
   val: string;
 
   children: Map<string, TrieNode>;

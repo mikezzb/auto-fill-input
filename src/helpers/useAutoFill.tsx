@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Trie from './Trie';
 
-type IUseAutoFillProps = {
+type Props = {
   input: string,
   dictionary: string[],
 };
@@ -9,7 +9,7 @@ type IUseAutoFillProps = {
 const useAutoFill = ({
   input,
   dictionary,
-}: IUseAutoFillProps) => {
+}: Props) => {
   const { current } = useRef({
     wordTrie: new Trie([], true),
     charTrie: new Trie([], false),

@@ -1,10 +1,9 @@
-import { ITrie, ITrieNode } from '../interfaces';
 import TrieNode from './TrieNode';
 
-export class Trie implements ITrie {
+export class Trie {
   isWordNode: boolean;
 
-  root: ITrieNode;
+  root: TrieNode;
 
   constructor(dictionary: string[], isWordNode: boolean) {
     this.isWordNode = isWordNode;
@@ -34,7 +33,7 @@ export class Trie implements ITrie {
   }
 
   search(word: string[] | string): string {
-    let currNode: ITrieNode | undefined = this.root;
+    let currNode: TrieNode | undefined = this.root;
     /* Check if children node has current value, if has, update the child to be currNode, else DNE */
     for (const str of word) {
       currNode = currNode.children.get(str);
@@ -51,7 +50,7 @@ export class Trie implements ITrie {
     return this.getDownwardPath(currNode, '') || '';
   }
 
-  getDownwardPath(root: ITrieNode | null, currStr: string): string | undefined {
+  getDownwardPath(root: TrieNode | null, currStr: string): string | undefined {
     if (!root || root.ended) {
       return currStr;
     }

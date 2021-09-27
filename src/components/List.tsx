@@ -1,10 +1,11 @@
+import { FC } from 'react';
 import './List.css';
 
-type IListProps = {
+type Props = {
   items: string[],
 };
 
-const List = ({ items }: IListProps) => (
+const List: FC<Props> = ({ items }) => (
   <div className="list">
     <div className="list-header alter">{`Dictionary: ${items.length}`}</div>
     {

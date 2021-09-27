@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './SearchPage.css';
 import useAutoFill from '../helpers/useAutoFill';
 import List from './List';
-import { default as defaultDictionary } from '../dictionary';
+import defaultDictionary from '../dictionary';
 
 const TAB_KEY_CODE = 9;
 
